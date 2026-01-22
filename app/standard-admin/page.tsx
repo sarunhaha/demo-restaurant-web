@@ -122,7 +122,7 @@ export default function StandardAdminPage() {
             {/* Demo Notice */}
             <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
               <p className="text-sm text-blue-700">
-                <strong>Demo Mode:</strong> Changes won't be saved permanently. This is a preview of the Basic Admin Panel.
+                <strong>Demo Mode:</strong> Changes won&apos;t be saved permanently. This is a preview of the Basic Admin Panel.
               </p>
             </div>
           </div>
