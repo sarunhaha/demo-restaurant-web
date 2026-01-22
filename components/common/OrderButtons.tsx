@@ -1,5 +1,7 @@
 'use client'
 
+import { QrCode } from 'lucide-react'
+
 interface OrderButtonsProps {
   variant?: 'horizontal' | 'vertical' | 'grid'
   size?: 'sm' | 'md' | 'lg'
@@ -63,6 +65,100 @@ export default function OrderButtons({
     grid: 'grid grid-cols-1 sm:grid-cols-3 gap-3'
   }
 
+  // If showing QR, use a different layout
+  if (showQR) {
+    return (
+      <div className={className}>
+        {/* Desktop: Side by side layout */}
+        <div className="hidden md:flex items-center justify-center gap-8">
+          {/* Order Buttons */}
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-medium text-gray-600 text-center mb-1">Order Online</p>
+            {orderPlatforms.map((platform) => (
+              <a
+                key={platform.name}
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+                  ${platform.color} ${platform.hoverColor}
+                  text-white font-medium rounded-lg
+                  transition-all duration-200 transform hover:scale-105
+                  inline-flex items-center justify-center gap-2
+                  ${sizeClasses[size]}
+                  shadow-md hover:shadow-lg
+                `}
+              >
+                {platform.icon}
+                {showLabels && <span>Order on {platform.name}</span>}
+              </a>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-16 w-px bg-gray-300" />
+            <span className="text-sm text-gray-400 font-medium">OR</span>
+            <div className="h-16 w-px bg-gray-300" />
+          </div>
+
+          {/* QR Code */}
+          <div className="flex flex-col items-center">
+            <p className="text-sm font-medium text-gray-600 mb-3">Scan to Order</p>
+            <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+              <div className="w-28 h-28 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200">
+                <QrCode className="w-16 h-16 text-gray-400" />
+              </div>
+            </div>
+            <p className="text-xs text-gray-400 mt-2">Point camera at code</p>
+          </div>
+        </div>
+
+        {/* Mobile: Stacked layout */}
+        <div className="md:hidden">
+          {/* Order Buttons */}
+          <div className="flex flex-col gap-2">
+            {orderPlatforms.map((platform) => (
+              <a
+                key={platform.name}
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+                  ${platform.color} ${platform.hoverColor}
+                  text-white font-medium rounded-lg
+                  transition-all duration-200
+                  inline-flex items-center justify-center gap-2
+                  px-4 py-3 text-sm
+                  shadow-md
+                `}
+              >
+                {platform.icon}
+                <span>Order on {platform.name}</span>
+              </a>
+            ))}
+          </div>
+
+          {/* QR Code Section */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="flex items-center justify-center gap-4">
+              <div className="bg-white p-3 rounded-xl shadow-md border border-gray-100">
+                <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200">
+                  <QrCode className="w-12 h-12 text-gray-400" />
+                </div>
+              </div>
+              <div className="text-left">
+                <p className="font-medium text-gray-700">Scan to Order</p>
+                <p className="text-sm text-gray-500 mt-1">Point your camera<br/>at the QR code</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Standard layout without QR
   return (
     <div className={className}>
       <div className={containerClasses[variant]}>
@@ -86,17 +182,6 @@ export default function OrderButtons({
           </a>
         ))}
       </div>
-
-      {showQR && (
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500 mb-2">Or scan to order</p>
-          <div className="inline-block bg-white p-4 rounded-lg shadow-md">
-            <div className="w-24 h-24 bg-gray-200 flex items-center justify-center rounded">
-              <span className="text-xs text-gray-400">QR Code</span>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

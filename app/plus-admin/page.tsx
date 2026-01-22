@@ -534,43 +534,63 @@ export default function PlusAdminPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+      <header className="bg-white shadow-sm sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <Link
                 href="/plus"
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+                className="flex items-center gap-1 md:gap-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Back to Site
+                <span className="hidden sm:inline">Back to Site</span>
               </Link>
-              <div className="h-6 w-px bg-gray-300" />
+              <div className="hidden md:block h-6 w-px bg-gray-300" />
               <div className="flex items-center gap-2">
-                <LayoutDashboard className="w-6 h-6 text-primary" />
-                <span className="font-bold text-xl">Full Admin Panel</span>
-                <span className="bg-accent text-secondary text-xs px-2 py-1 rounded-full font-medium">Plus</span>
+                <LayoutDashboard className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                <span className="font-bold text-base md:text-xl">Admin</span>
+                <span className="bg-accent text-secondary text-xs px-2 py-0.5 rounded-full font-medium">Plus</span>
               </div>
             </div>
             <button
               onClick={handleSave}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-all text-sm md:text-base ${
                 saved
                   ? 'bg-green-500 text-white'
                   : 'bg-primary hover:bg-primary-dark text-white'
               }`}
             >
               <Save className="w-4 h-4" />
-              {saved ? 'Saved!' : 'Save Changes'}
+              <span className="hidden sm:inline">{saved ? 'Saved!' : 'Save'}</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Mobile Tab Navigation */}
+      <div className="md:hidden bg-white border-b sticky top-[52px] z-20 overflow-x-auto">
+        <div className="flex px-2 py-2 gap-1">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg font-medium whitespace-nowrap transition-all text-xs ${
+                activeTab === tab.id
+                  ? 'bg-primary text-white'
+                  : 'text-gray-600 bg-gray-100'
+              }`}
+            >
+              <tab.icon className="w-3.5 h-3.5" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-4 md:py-8">
         <div className="flex gap-8">
-          {/* Sidebar */}
-          <div className="w-64 flex-shrink-0">
+          {/* Sidebar - Desktop only */}
+          <div className="hidden md:block w-64 flex-shrink-0">
             <nav className="bg-white rounded-xl shadow-sm p-4 space-y-2">
               {tabs.map(tab => (
                 <button
@@ -616,30 +636,115 @@ export default function PlusAdminPage() {
           </div>
 
           {/* Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Menu Tab */}
             {activeTab === 'menu' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 md:mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold">Menu Management</h2>
+                    <h2 className="text-xl md:text-2xl font-bold">Menu Management</h2>
                     <p className="text-gray-500 text-sm mt-1">Manage items, prices, and availability</p>
                   </div>
                   <button
                     onClick={openAddMenuModal}
-                    className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+                    className="flex items-center justify-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors text-sm md:text-base"
                   >
                     <Plus className="w-4 h-4" /> Add Item
                   </button>
                 </div>
 
                 {categories.map(category => (
-                  <div key={category} className="mb-8">
-                    <h3 className="font-semibold text-lg text-gray-700 mb-4 flex items-center gap-2">
-                      <UtensilsCrossed className="w-5 h-5 text-primary" />
+                  <div key={category} className="mb-6 md:mb-8">
+                    <h3 className="font-semibold text-base md:text-lg text-gray-700 mb-3 md:mb-4 flex items-center gap-2">
+                      <UtensilsCrossed className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                       {category}
                     </h3>
-                    <div className="overflow-x-auto">
+
+                    {/* Mobile: Card Layout */}
+                    <div className="md:hidden space-y-3">
+                      {menuData.filter(item => item.category === category).map(item => (
+                        <div key={item.id} className="border rounded-lg p-3">
+                          <div className="flex gap-3">
+                            <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                              <Image src={item.image} alt={item.name} fill className="object-cover" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <input
+                                type="text"
+                                value={item.name}
+                                onChange={(e) => updateMenuItem(item.id, 'name', e.target.value)}
+                                className="w-full font-medium text-sm px-2 py-1 border border-gray-200 rounded focus:border-primary"
+                              />
+                              <div className="flex items-center gap-1 mt-1">
+                                <DollarSign className="w-3 h-3 text-gray-400" />
+                                <input
+                                  type="number"
+                                  step="0.10"
+                                  value={item.price}
+                                  onChange={(e) => updateMenuItem(item.id, 'price', parseFloat(e.target.value))}
+                                  className="w-20 text-sm px-2 py-1 border border-gray-200 rounded focus:border-primary"
+                                />
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => updateMenuItem(item.id, 'available', !item.available)}
+                              className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
+                                item.available ? 'bg-green-500' : 'bg-gray-300'
+                              }`}
+                            >
+                              <div className={`w-4 h-4 bg-white rounded-full shadow transform transition-transform ${
+                                item.available ? 'translate-x-5' : 'translate-x-0.5'
+                              }`} />
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-between mt-3 pt-3 border-t">
+                            <div className="flex gap-1">
+                              <button
+                                onClick={() => updateMenuItem(item.id, 'bestseller', !item.bestseller)}
+                                className={`p-1.5 rounded-full transition-colors ${
+                                  item.bestseller ? 'bg-accent text-secondary' : 'bg-gray-100 text-gray-400'
+                                }`}
+                              >
+                                <Star className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => updateMenuItem(item.id, 'spicy', !item.spicy)}
+                                className={`p-1.5 rounded-full transition-colors ${
+                                  item.spicy ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400'
+                                }`}
+                              >
+                                <Flame className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => updateMenuItem(item.id, 'vegetarian', !item.vegetarian)}
+                                className={`p-1.5 rounded-full transition-colors ${
+                                  item.vegetarian ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-400'
+                                }`}
+                              >
+                                <Leaf className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                            <div className="flex gap-1">
+                              <button
+                                onClick={() => openEditMenuModal(item)}
+                                className="p-1.5 text-gray-400 hover:text-primary transition-colors"
+                              >
+                                <Edit3 className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => confirmDelete('menu', item.id, item.name)}
+                                className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Desktop: Table Layout */}
+                    <div className="hidden md:block overflow-x-auto">
                       <table className="w-full">
                         <thead>
                           <tr className="border-b bg-gray-50">
@@ -750,21 +855,21 @@ export default function PlusAdminPage() {
 
             {/* Gallery Tab */}
             {activeTab === 'gallery' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 md:mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold">Gallery Management</h2>
+                    <h2 className="text-xl md:text-2xl font-bold">Gallery Management</h2>
                     <p className="text-gray-500 text-sm mt-1">Manage photos displayed on the gallery page</p>
                   </div>
                   <button
                     onClick={openAddGalleryModal}
-                    className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+                    className="flex items-center justify-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors text-sm md:text-base"
                   >
                     <Upload className="w-4 h-4" /> Add Image
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                   {galleryData.map(image => (
                     <div key={image.id} className="relative group">
                       <div className={`relative h-48 rounded-xl overflow-hidden ${!image.visible ? 'opacity-50' : ''}`}>

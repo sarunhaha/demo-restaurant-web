@@ -65,43 +65,63 @@ export default function StandardAdminPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+      <header className="bg-white shadow-sm sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <Link
                 href="/standard"
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+                className="flex items-center gap-1 md:gap-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Back to Site
+                <span className="hidden sm:inline">Back to Site</span>
               </Link>
-              <div className="h-6 w-px bg-gray-300" />
+              <div className="hidden md:block h-6 w-px bg-gray-300" />
               <div className="flex items-center gap-2">
-                <LayoutDashboard className="w-6 h-6 text-primary" />
-                <span className="font-bold text-xl">Basic Admin Panel</span>
-                <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">Standard</span>
+                <LayoutDashboard className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                <span className="font-bold text-base md:text-xl">Admin</span>
+                <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">Standard</span>
               </div>
             </div>
             <button
               onClick={handleSave}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-all text-sm md:text-base ${
                 saved
                   ? 'bg-green-500 text-white'
                   : 'bg-primary hover:bg-primary-dark text-white'
               }`}
             >
               <Save className="w-4 h-4" />
-              {saved ? 'Saved!' : 'Save Changes'}
+              <span className="hidden sm:inline">{saved ? 'Saved!' : 'Save'}</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Mobile Tab Navigation */}
+      <div className="md:hidden bg-white border-b sticky top-[52px] z-20 overflow-x-auto">
+        <div className="flex px-2 py-2 gap-1">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all text-sm ${
+                activeTab === tab.id
+                  ? 'bg-primary text-white'
+                  : 'text-gray-600 bg-gray-100'
+              }`}
+            >
+              <tab.icon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-4 md:py-8">
         <div className="flex gap-8">
-          {/* Sidebar */}
-          <div className="w-64 flex-shrink-0">
+          {/* Sidebar - Desktop only */}
+          <div className="hidden md:block w-64 flex-shrink-0">
             <nav className="bg-white rounded-xl shadow-sm p-4 space-y-2">
               {tabs.map(tab => (
                 <button
@@ -128,16 +148,56 @@ export default function StandardAdminPage() {
           </div>
 
           {/* Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Menu Tab */}
             {activeTab === 'menu' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold">Menu Management</h2>
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                <div className="flex items-center justify-between mb-4 md:mb-6">
+                  <h2 className="text-xl md:text-2xl font-bold">Menu Management</h2>
                   <span className="text-sm text-gray-500">{menuData.length} items</span>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Mobile: Card Layout */}
+                <div className="md:hidden space-y-3">
+                  {menuData.map(item => (
+                    <div key={item.id} className="border rounded-lg p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <input
+                            type="text"
+                            value={item.name}
+                            onChange={(e) => updateMenuItem(item.id, 'name', e.target.value)}
+                            className="w-full font-medium text-base px-2 py-1 border border-gray-200 rounded focus:border-primary"
+                          />
+                          <p className="text-sm text-gray-500 mt-1 px-2">{item.category}</p>
+                        </div>
+                        <button
+                          onClick={() => updateMenuItem(item.id, 'available', !item.available)}
+                          className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+                            item.available ? 'bg-green-500' : 'bg-gray-300'
+                          }`}
+                        >
+                          <div className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform ${
+                            item.available ? 'translate-x-6' : 'translate-x-0.5'
+                          }`} />
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-1 mt-2">
+                        <DollarSign className="w-4 h-4 text-gray-400" />
+                        <input
+                          type="number"
+                          step="0.10"
+                          value={item.price}
+                          onChange={(e) => updateMenuItem(item.id, 'price', parseFloat(e.target.value))}
+                          className="w-24 px-2 py-1 border border-gray-200 rounded focus:border-primary"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop: Table Layout */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b">
@@ -193,10 +253,10 @@ export default function StandardAdminPage() {
 
             {/* Contact Tab */}
             {activeTab === 'contact' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Contact Information</h2>
 
-                <div className="space-y-6 max-w-md">
+                <div className="space-y-4 md:space-y-6">
                   <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                       <Phone className="w-4 h-4" /> Phone Number
@@ -246,17 +306,17 @@ export default function StandardAdminPage() {
 
             {/* Hours Tab */}
             {activeTab === 'hours' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-2xl font-bold mb-6">Opening Hours</h2>
+              <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Opening Hours</h2>
 
-                <div className="space-y-4 max-w-md">
+                <div className="space-y-4">
                   {[
-                    { key: 'monThu', label: 'Monday - Thursday' },
-                    { key: 'friSat', label: 'Friday - Saturday' },
+                    { key: 'monThu', label: 'Mon - Thu' },
+                    { key: 'friSat', label: 'Fri - Sat' },
                     { key: 'sunday', label: 'Sunday' },
                   ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center gap-4">
-                      <span className="w-40 text-gray-700 font-medium">{label}</span>
+                    <div key={key} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                      <span className="w-full sm:w-28 text-gray-700 font-medium">{label}</span>
                       <div className="flex items-center gap-2">
                         <input
                           type="time"
@@ -265,7 +325,7 @@ export default function StandardAdminPage() {
                             ...prev,
                             [key]: { ...prev[key as keyof typeof hoursData], open: e.target.value }
                           }))}
-                          className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         />
                         <span className="text-gray-500">to</span>
                         <input
@@ -275,7 +335,7 @@ export default function StandardAdminPage() {
                             ...prev,
                             [key]: { ...prev[key as keyof typeof hoursData], close: e.target.value }
                           }))}
-                          className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         />
                       </div>
                     </div>
