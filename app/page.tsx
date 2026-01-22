@@ -191,82 +191,155 @@ export default function LandingPage() {
           <h2 className="font-heading text-3xl font-bold text-center text-white mb-8">
             Feature Comparison
           </h2>
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="text-left py-4 px-6 font-semibold">Feature</th>
-                    <th className="text-center py-4 px-4 font-semibold text-blue-600">Lite</th>
-                    <th className="text-center py-4 px-4 font-semibold text-primary">Standard</th>
-                    <th className="text-center py-4 px-4 font-semibold text-accent">Plus</th>
+
+          {/* Mobile: Card Layout */}
+          <div className="md:hidden space-y-4">
+            {[
+              { feature: 'หน้าแรก (Hero + CTA)', lite: true, standard: true, plus: true },
+              { feature: 'Mobile-first Design', lite: true, standard: true, plus: true },
+              { feature: 'Menu Display', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
+              { feature: 'Gallery Page', lite: false, standard: false, plus: true },
+              { feature: 'About Us Page', lite: false, standard: false, plus: true },
+              { feature: 'Contact Form', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
+              { feature: 'Google Maps', lite: 'Link', standard: 'Embed', plus: '+ Directions' },
+              { feature: 'Order Buttons', lite: '1', standard: '3', plus: '3 + QR' },
+              { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Advanced' },
+              { feature: 'Admin Panel', lite: false, standard: 'Basic', plus: 'Full' },
+            ].map((row, index) => (
+              <div key={index} className="bg-white rounded-xl p-4 shadow-lg">
+                <h3 className="font-semibold text-gray-800 mb-3 text-center">{row.feature}</h3>
+                <div className="grid grid-cols-3 gap-2">
+                  {/* Lite */}
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-blue-600 mb-1">Lite</div>
+                    {typeof row.lite === 'boolean' ? (
+                      row.lite ? (
+                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                        </div>
+                      ) : (
+                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                        </div>
+                      )
+                    ) : (
+                      <span className="text-xs text-gray-600 font-medium">{row.lite}</span>
+                    )}
+                  </div>
+                  {/* Standard */}
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-primary mb-1">Standard</div>
+                    {typeof row.standard === 'boolean' ? (
+                      row.standard ? (
+                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                        </div>
+                      ) : (
+                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                        </div>
+                      )
+                    ) : (
+                      <span className="text-xs text-gray-600 font-medium">{row.standard}</span>
+                    )}
+                  </div>
+                  {/* Plus */}
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-accent mb-1">Plus</div>
+                    {typeof row.plus === 'boolean' ? (
+                      row.plus ? (
+                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                        </div>
+                      ) : (
+                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                        </div>
+                      )
+                    ) : (
+                      <span className="text-xs text-gray-600 font-medium">{row.plus}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: Table Layout */}
+          <div className="hidden md:block bg-white rounded-2xl shadow-xl overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="text-left py-4 px-6 font-semibold">Feature</th>
+                  <th className="text-center py-4 px-4 font-semibold text-blue-600">Lite</th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">Standard</th>
+                  <th className="text-center py-4 px-4 font-semibold text-accent">Plus</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {[
+                  { feature: 'หน้าแรก (Hero + CTA)', lite: true, standard: true, plus: true },
+                  { feature: 'Mobile-first Design', lite: true, standard: true, plus: true },
+                  { feature: 'Menu Display', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
+                  { feature: 'Gallery Page', lite: false, standard: false, plus: true },
+                  { feature: 'About Us Page', lite: false, standard: false, plus: true },
+                  { feature: 'Contact Form', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
+                  { feature: 'Google Maps', lite: 'Link Only', standard: 'Embed', plus: 'Embed + Directions' },
+                  { feature: 'Order Buttons', lite: '1 platform', standard: '3 platforms', plus: '3 + QR Code' },
+                  { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Advanced' },
+                  { feature: 'Admin Panel', lite: false, standard: 'Basic', plus: 'Full' },
+                ].map((row, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="py-4 px-6 text-gray-700">{row.feature}</td>
+                    <td className="text-center py-4 px-4">
+                      {typeof row.lite === 'boolean' ? (
+                        row.lite ? (
+                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          </div>
+                        )
+                      ) : (
+                        <span className="text-sm text-gray-600">{row.lite}</span>
+                      )}
+                    </td>
+                    <td className="text-center py-4 px-4">
+                      {typeof row.standard === 'boolean' ? (
+                        row.standard ? (
+                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          </div>
+                        )
+                      ) : (
+                        <span className="text-sm text-gray-600">{row.standard}</span>
+                      )}
+                    </td>
+                    <td className="text-center py-4 px-4">
+                      {typeof row.plus === 'boolean' ? (
+                        row.plus ? (
+                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          </div>
+                        )
+                      ) : (
+                        <span className="text-sm text-gray-600">{row.plus}</span>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {[
-                    { feature: 'หน้าแรก (Hero + CTA)', lite: true, standard: true, plus: true },
-                    { feature: 'Mobile-first Design', lite: true, standard: true, plus: true },
-                    { feature: 'Menu Display', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
-                    { feature: 'Gallery Page', lite: false, standard: false, plus: true },
-                    { feature: 'About Us Page', lite: false, standard: false, plus: true },
-                    { feature: 'Contact Form', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
-                    { feature: 'Google Maps', lite: 'Link Only', standard: 'Embed', plus: 'Embed + Directions' },
-                    { feature: 'Order Buttons', lite: '1 platform', standard: '3 platforms', plus: '3 + QR Code' },
-                    { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Advanced' },
-                    { feature: 'Admin Panel', lite: false, standard: 'Basic', plus: 'Full' },
-                  ].map((row, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="py-4 px-6 text-gray-700">{row.feature}</td>
-                      <td className="text-center py-4 px-4">
-                        {typeof row.lite === 'boolean' ? (
-                          row.lite ? (
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                              <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                            </div>
-                          ) : (
-                            <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                              <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                            </div>
-                          )
-                        ) : (
-                          <span className="text-sm text-gray-600">{row.lite}</span>
-                        )}
-                      </td>
-                      <td className="text-center py-4 px-4">
-                        {typeof row.standard === 'boolean' ? (
-                          row.standard ? (
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                              <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                            </div>
-                          ) : (
-                            <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                              <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                            </div>
-                          )
-                        ) : (
-                          <span className="text-sm text-gray-600">{row.standard}</span>
-                        )}
-                      </td>
-                      <td className="text-center py-4 px-4">
-                        {typeof row.plus === 'boolean' ? (
-                          row.plus ? (
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                              <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                            </div>
-                          ) : (
-                            <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                              <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                            </div>
-                          )
-                        ) : (
-                          <span className="text-sm text-gray-600">{row.plus}</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
