@@ -115,24 +115,20 @@ export default function NavPlus() {
         <div
           className={`
             md:hidden overflow-hidden transition-all duration-300
-            ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+            ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
           `}
         >
-          <div className={`mt-4 p-4 rounded-xl ${scrolled ? 'bg-gray-50' : 'bg-white/10 backdrop-blur'}`}>
+          <div className={`mt-4 p-4 rounded-xl ${scrolled ? 'bg-gray-50' : 'bg-white/95 shadow-lg'}`}>
             {navLinks.filter(link => !link.isAdmin).map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  block py-3 px-4 rounded-lg transition-colors mb-1
+                  block py-4 px-4 rounded-lg transition-colors mb-2 text-base font-medium
                   ${isActive(link.href)
-                    ? scrolled
-                      ? 'bg-primary text-white'
-                      : 'bg-white/20 text-white'
-                    : scrolled
-                      ? 'text-secondary hover:bg-gray-100'
-                      : 'text-white hover:bg-white/10'
+                    ? 'bg-primary text-white'
+                    : 'text-secondary hover:bg-gray-100'
                   }
                 `}
               >
@@ -142,22 +138,16 @@ export default function NavPlus() {
             <Link
               href="/plus-admin"
               onClick={() => setIsOpen(false)}
-              className={`
-                flex items-center gap-2 py-3 px-4 rounded-lg transition-colors mb-1
-                ${scrolled
-                  ? 'text-accent-dark hover:bg-accent/10'
-                  : 'text-accent hover:bg-white/10'
-                }
-              `}
+              className="flex items-center gap-2 py-4 px-4 rounded-lg transition-colors mb-2 text-base font-medium text-accent-dark hover:bg-accent/10"
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-5 h-5" />
               Admin Panel
             </Link>
             <a
               href="tel:0391234567"
-              className="block mt-2 bg-accent text-secondary font-bold py-3 px-4 rounded-lg text-center"
+              className="block mt-3 bg-accent text-secondary font-bold py-4 px-4 rounded-lg text-center text-base"
             >
-              <Phone className="w-4 h-4 inline mr-1" /> Book Now
+              <Phone className="w-5 h-5 inline mr-2" /> Book Now
             </a>
           </div>
         </div>

@@ -9,7 +9,7 @@ const packages = [
     id: 'lite',
     name: 'Lite',
     fullName: 'Template Pro',
-    price: 'A$890',
+    price: '$890 AUD',
     description: 'Perfect for restaurants starting their online presence',
     color: 'from-blue-500 to-blue-600',
     borderColor: 'border-blue-500',
@@ -32,7 +32,7 @@ const packages = [
     id: 'standard',
     name: 'Standard',
     fullName: 'Conversion',
-    price: 'A$1,490',
+    price: '$1,490 AUD',
     description: 'Optimized for customer conversion and engagement',
     color: 'from-primary to-primary-dark',
     borderColor: 'border-primary',
@@ -56,7 +56,7 @@ const packages = [
     id: 'plus',
     name: 'Plus',
     fullName: 'Custom',
-    price: 'A$2,200',
+    price: '$2,200 AUD',
     description: 'Full-featured website with premium experience',
     color: 'from-accent to-yellow-600',
     borderColor: 'border-accent',
@@ -186,154 +186,81 @@ export default function LandingPage() {
       </section>
 
       {/* Comparison Table */}
-      <section className="py-16 px-4 relative z-10">
+      <section className="py-16 px-2 sm:px-4 relative z-10">
         <div className="container-custom max-w-4xl">
-          <h2 className="font-heading text-3xl font-bold text-center text-white mb-8">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-center text-white mb-6 sm:mb-8">
             Feature Comparison
           </h2>
 
-          {/* Mobile: Card Layout */}
-          <div className="md:hidden space-y-4">
-            {[
-              { feature: 'หน้าแรก (Hero + CTA)', lite: true, standard: true, plus: true },
-              { feature: 'Mobile-first Design', lite: true, standard: true, plus: true },
-              { feature: 'Menu Display', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
-              { feature: 'Gallery Page', lite: false, standard: false, plus: true },
-              { feature: 'About Us Page', lite: false, standard: false, plus: true },
-              { feature: 'Contact Form', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
-              { feature: 'Google Maps', lite: 'Link', standard: 'Embed', plus: '+ Directions' },
-              { feature: 'Order Buttons', lite: '1', standard: '3', plus: '3 + QR' },
-              { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Advanced' },
-              { feature: 'Admin Panel', lite: false, standard: 'Basic', plus: 'Full' },
-            ].map((row, index) => (
-              <div key={index} className="bg-white rounded-xl p-4 shadow-lg">
-                <h3 className="font-semibold text-gray-800 mb-3 text-center">{row.feature}</h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {/* Lite */}
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-blue-600 mb-1">Lite</div>
-                    {typeof row.lite === 'boolean' ? (
-                      row.lite ? (
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                        </div>
-                      ) : (
-                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                        </div>
-                      )
-                    ) : (
-                      <span className="text-xs text-gray-600 font-medium">{row.lite}</span>
-                    )}
-                  </div>
-                  {/* Standard */}
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-primary mb-1">Standard</div>
-                    {typeof row.standard === 'boolean' ? (
-                      row.standard ? (
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                        </div>
-                      ) : (
-                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                        </div>
-                      )
-                    ) : (
-                      <span className="text-xs text-gray-600 font-medium">{row.standard}</span>
-                    )}
-                  </div>
-                  {/* Plus */}
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-accent mb-1">Plus</div>
-                    {typeof row.plus === 'boolean' ? (
-                      row.plus ? (
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                          <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
-                        </div>
-                      ) : (
-                        <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                          <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
-                        </div>
-                      )
-                    ) : (
-                      <span className="text-xs text-gray-600 font-medium">{row.plus}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Desktop: Table Layout */}
-          <div className="hidden md:block bg-white rounded-2xl shadow-xl overflow-hidden">
-            <table className="w-full">
+          {/* Table Layout - Responsive */}
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
+            <table className="w-full text-xs sm:text-sm md:text-base">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="text-left py-4 px-6 font-semibold">Feature</th>
-                  <th className="text-center py-4 px-4 font-semibold text-blue-600">Lite</th>
-                  <th className="text-center py-4 px-4 font-semibold text-primary">Standard</th>
-                  <th className="text-center py-4 px-4 font-semibold text-accent">Plus</th>
+                  <th className="text-left py-2 sm:py-4 px-2 sm:px-6 font-semibold">Feature</th>
+                  <th className="text-center py-2 sm:py-4 px-1 sm:px-4 font-semibold text-blue-600">Lite</th>
+                  <th className="text-center py-2 sm:py-4 px-1 sm:px-4 font-semibold text-primary">Std</th>
+                  <th className="text-center py-2 sm:py-4 px-1 sm:px-4 font-semibold text-accent">Plus</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {[
-                  { feature: 'หน้าแรก (Hero + CTA)', lite: true, standard: true, plus: true },
-                  { feature: 'Mobile-first Design', lite: true, standard: true, plus: true },
-                  { feature: 'Menu Display', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
-                  { feature: 'Gallery Page', lite: false, standard: false, plus: true },
-                  { feature: 'About Us Page', lite: false, standard: false, plus: true },
-                  { feature: 'Contact Form', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
-                  { feature: 'Google Maps', lite: 'Link Only', standard: 'Embed', plus: 'Embed + Directions' },
-                  { feature: 'Order Buttons', lite: '1 platform', standard: '3 platforms', plus: '3 + QR Code' },
-                  { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Advanced' },
+                  { feature: 'Hero + CTA', lite: true, standard: true, plus: true },
+                  { feature: 'Mobile-first', lite: true, standard: true, plus: true },
+                  { feature: 'Menu', lite: 'Basic', standard: 'Categories', plus: 'Filter' },
+                  { feature: 'Gallery', lite: false, standard: false, plus: true },
+                  { feature: 'About Us', lite: false, standard: false, plus: true },
+                  { feature: 'Contact', lite: 'Basic', standard: 'Enhanced', plus: 'Full' },
+                  { feature: 'Google Maps', lite: 'Link', standard: 'Embed', plus: '+ Dir' },
+                  { feature: 'Order Buttons', lite: '1', standard: '3', plus: '3+QR' },
+                  { feature: 'Animations', lite: false, standard: 'Basic', plus: 'Adv' },
                   { feature: 'Admin Panel', lite: false, standard: 'Basic', plus: 'Full' },
                 ].map((row, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="py-4 px-6 text-gray-700">{row.feature}</td>
-                    <td className="text-center py-4 px-4">
+                    <td className="py-2 sm:py-4 px-2 sm:px-6 text-gray-700">{row.feature}</td>
+                    <td className="text-center py-2 sm:py-4 px-1 sm:px-4">
                       {typeof row.lite === 'boolean' ? (
                         row.lite ? (
-                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-600" strokeWidth={3} />
                           </div>
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400" strokeWidth={3} />
                           </div>
                         )
                       ) : (
-                        <span className="text-sm text-gray-600">{row.lite}</span>
+                        <span className="text-gray-600">{row.lite}</span>
                       )}
                     </td>
-                    <td className="text-center py-4 px-4">
+                    <td className="text-center py-2 sm:py-4 px-1 sm:px-4">
                       {typeof row.standard === 'boolean' ? (
                         row.standard ? (
-                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-600" strokeWidth={3} />
                           </div>
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400" strokeWidth={3} />
                           </div>
                         )
                       ) : (
-                        <span className="text-sm text-gray-600">{row.standard}</span>
+                        <span className="text-gray-600">{row.standard}</span>
                       )}
                     </td>
-                    <td className="text-center py-4 px-4">
+                    <td className="text-center py-2 sm:py-4 px-1 sm:px-4">
                       {typeof row.plus === 'boolean' ? (
                         row.plus ? (
-                          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-                            <Check className="w-3.5 h-3.5 text-green-600" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                            <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-600" strokeWidth={3} />
                           </div>
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                            <X className="w-3.5 h-3.5 text-gray-400" strokeWidth={3} />
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                            <X className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400" strokeWidth={3} />
                           </div>
                         )
                       ) : (
-                        <span className="text-sm text-gray-600">{row.plus}</span>
+                        <span className="text-gray-600">{row.plus}</span>
                       )}
                     </td>
                   </tr>
