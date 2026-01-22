@@ -74,10 +74,14 @@ export default function LitePage() {
                             </span>
                           )}
                           {item.spicy && (
-                            <Flame className="w-4 h-4 text-red-500" title="Spicy" />
+                            <span title="Spicy">
+                              <Flame className="w-4 h-4 text-red-500" />
+                            </span>
                           )}
                           {item.vegetarian && (
-                            <Leaf className="w-4 h-4 text-green-500" title="Vegetarian" />
+                            <span title="Vegetarian">
+                              <Leaf className="w-4 h-4 text-green-500" />
+                            </span>
                           )}
                         </div>
                         <p className="text-sm text-gray-500 mt-1">{item.description}</p>
