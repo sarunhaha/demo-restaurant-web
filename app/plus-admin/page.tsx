@@ -528,7 +528,7 @@ export default function PlusAdminPage() {
     { id: 'qr' as const, label: 'QR & Links', icon: QrCode },
   ]
 
-  const categories = [...new Set(menuData.map(item => item.category))]
+  const categories = Array.from(new Set(menuData.map(item => item.category)))
   const allCategories = ['Starters', 'Main Courses', 'Desserts', 'Drinks', 'Specials']
 
   return (
